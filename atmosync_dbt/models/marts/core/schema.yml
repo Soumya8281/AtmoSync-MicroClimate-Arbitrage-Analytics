@@ -1,0 +1,138 @@
+version: 2
+
+models:
+  - name: dim_container
+    description: "Dimension table representing storage containers and their aggregated telemetry metrics."
+    columns:
+      - name: CONTAINER_ID
+        description: "Primary key. Unique identifier for the atmospheric storage container."
+        tests:
+          - unique
+          - not_null
+
+      - name: FIRST_EVENT_TIME
+        description: "Timestamp of the earliest telemetry event recorded for the container."
+        tests:
+          - not_null
+
+      - name: LAST_EVENT_TIME
+        description: "Timestamp of the latest telemetry event recorded for the container."
+        tests:
+          - not_null
+
+      - name: TOTAL_EVENTS
+        description: "Total number of telemetry readings captured for the container."
+        tests:
+          - not_null
+
+      - name: AVERAGE_TEMPERATURE
+        description: "Average recorded temperature in degrees Celsius across all container events."
+
+      - name: AVERAGE_HUMIDITY
+        description: "Average recorded relative humidity percentage across all container events."
+
+      - name: MAXIMUM_VIBRATION
+        description: "Maximum vibration amplitude recorded for the container."
+
+  - name: dim_date
+    description: "Date dimension table derived from telemetry event dates for time-series reporting."
+    columns:
+      - name: DATE_KEY
+        description: "Primary key. Calendar date representing the event date."
+        tests:
+          - unique
+          - not_null
+
+      - name: YEAR
+        description: "Four-digit calendar year."
+        tests:
+          - not_null
+
+      - name: QUARTER
+        description: "Calendar quarter (1-4)."
+        tests:
+          - not_null
+
+      - name: MONTH
+        description: "Calendar month number (1-12)."
+        tests:
+          - not_null
+
+      - name: MONTH_NAME
+        description: "Full or abbreviated name of the month."
+        tests:
+          - not_null
+
+      - name: WEEK
+        description: "Calendar week number of the year (1-53)."
+        tests:
+          - not_null
+
+      - name: DAY_OF_MONTH
+        description: "Day of the month (1-31)."
+        tests:
+          - not_null
+
+      - name: WEEKDAY_NAME
+        description: "Name of the day of the week."
+        tests:
+          - not_null
+
+      - name: IS_WEEKEND
+        description: "Boolean flag indicating whether the date falls on a weekend."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+  - name: fct_telemetry
+    description: "Fact table containing telemetry measurement events captured from storage containers."
+    columns:
+      - name: TELEMETRY_KEY
+        description: "Primary key. Deterministic surrogate hash key for each telemetry event."
+        tests:
+          - unique
+          - not_null
+
+      - name: CONTAINER_ID
+        description: "Foreign key to dim_container. Unique identifier of the container."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_container')
+              field: CONTAINER_ID
+
+      - name: EVENT_TIMESTAMP
+        description: "Exact timestamp when the telemetry reading was recorded."
+        tests:
+          - not_null
+
+      - name: DATE_KEY
+        description: "Foreign key to dim_date. Calendar date of the event."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: DATE_KEY
+
+      - name: TEMPERATURE
+        description: "Ambient temperature reading in degrees Celsius."
+        tests:
+          - not_null
+
+      - name: HUMIDITY
+        description: "Relative humidity percentage reading (0-100%)."
+        tests:
+          - not_null
+
+      - name: VIBRATION
+        description: "Vibration amplitude reading."
+        tests:
+          - not_null
+
+      - name: ANOMALY_FLAG
+        description: "Categorical status classification ('NORMAL' or 'ANOMALY_DETECTED')."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['NORMAL', 'ANOMALY_DETECTED']

@@ -1,0 +1,40 @@
+version: 2
+
+sources:
+  - name: RAW
+    description: "Raw IoT telemetry data ingested from edge sensors into Snowflake."
+    database: ATMOSYNC_DB
+    schema: RAW
+
+    tables:
+      - name: RAW_TELEMETRY
+        description: "Raw telemetry events emitted by storage containers monitoring environmental conditions."
+        loaded_at_field: EVENT_TIME
+        freshness:
+          warn_after: {count: 12, period: hour}
+          error_after: {count: 24, period: hour}
+        columns:
+          - name: CONTAINER_ID
+            description: "Unique identifier for the atmospheric storage container."
+            tests:
+              - not_null
+
+          - name: EVENT_TIME
+            description: "Timestamp when the telemetry metric was captured."
+            tests:
+              - not_null
+
+          - name: TEMPERATURE
+            description: "Ambient temperature reading in degrees Celsius."
+            tests:
+              - not_null
+
+          - name: HUMIDITY
+            description: "Relative humidity percentage reading (0-100%)."
+            tests:
+              - not_null
+
+          - name: VIBRATION
+            description: "Vibration amplitude metric captured by container sensors."
+            tests:
+              - not_null

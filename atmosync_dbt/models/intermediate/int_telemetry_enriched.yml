@@ -1,0 +1,68 @@
+version: 2
+
+models:
+  - name: int_telemetry_enriched
+    description: "Intermediate model that enriches staging telemetry data with temporal attributes (event_date, event_hour) and threshold anomaly flags."
+    columns:
+      - name: CONTAINER_ID
+        description: "Unique identifier for the atmospheric storage container."
+        tests:
+          - not_null
+
+      - name: EVENT_TIMESTAMP
+        description: "Exact timestamp of telemetry metric recording."
+        tests:
+          - not_null
+
+      - name: EVENT_DATE
+        description: "Calendar date derived from event timestamp."
+        tests:
+          - not_null
+
+      - name: EVENT_HOUR
+        description: "Hour of day (0-23) derived from event timestamp."
+        tests:
+          - not_null
+
+      - name: TEMPERATURE_CELSIUS
+        description: "Ambient temperature reading in degrees Celsius."
+        tests:
+          - not_null
+
+      - name: HUMIDITY_PERCENTAGE
+        description: "Relative humidity percentage reading (0-100%)."
+        tests:
+          - not_null
+
+      - name: VIBRATION_LEVEL
+        description: "Vibration amplitude metric captured by sensors."
+        tests:
+          - not_null
+
+      - name: IS_TEMPERATURE_ANOMALY
+        description: "Boolean indicator flagging temperatures outside normal operating thresholds (-20°C to 50°C)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+      - name: IS_HUMIDITY_ANOMALY
+        description: "Boolean indicator flagging humidity readings outside safe operational limits (10% to 90%)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+      - name: IS_VIBRATION_ANOMALY
+        description: "Boolean indicator flagging excessive vibration levels (> 8.0)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+      - name: ANOMALY_FLAG
+        description: "Categorical status classification ('NORMAL' or 'ANOMALY_DETECTED')."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['NORMAL', 'ANOMALY_DETECTED']

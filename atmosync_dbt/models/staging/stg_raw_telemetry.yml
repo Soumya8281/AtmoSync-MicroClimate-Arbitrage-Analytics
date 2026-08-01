@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: stg_raw_telemetry
+    description: "Staging model for raw container telemetry data. Performs explicit type casting and standardizes sensor metrics."
+    columns:
+      - name: CONTAINER_ID
+        description: "Unique identifier for the atmospheric storage container."
+        tests:
+          - not_null
+
+      - name: EVENT_TIME
+        description: "Timestamp when the telemetry metric was captured."
+        tests:
+          - not_null
+
+      - name: TEMPERATURE
+        description: "Ambient temperature reading in degrees Celsius."
+        tests:
+          - not_null
+
+      - name: HUMIDITY
+        description: "Relative humidity percentage reading (0-100%)."
+        tests:
+          - not_null
+
+      - name: VIBRATION
+        description: "Vibration amplitude metric captured by container sensors."
+        tests:
+          - not_null
