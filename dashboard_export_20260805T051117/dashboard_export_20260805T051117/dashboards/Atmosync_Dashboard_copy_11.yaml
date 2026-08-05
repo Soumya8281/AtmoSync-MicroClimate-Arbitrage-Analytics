@@ -1,0 +1,65 @@
+dashboard_title: Atmosync Dashboard [copy]
+description: null
+css: ''
+slug: null
+certified_by: null
+certification_details: null
+published: false
+uuid: dff279d0-4303-413e-8130-2d0ce7c39550
+position:
+  CHART-explore-104-1:
+    children: []
+    id: CHART-explore-104-1
+    meta:
+      chartId: 136355019
+      height: 50
+      sliceName: Temperature over time
+      uuid: f39ad7a6-af05-4a9f-b306-d5be4927098a
+      width: 4
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-E-eeHwDjWzjiw_qtAjke2
+    type: CHART
+  DASHBOARD_VERSION_KEY: v2
+  GRID_ID:
+    children:
+    - ROW-E-eeHwDjWzjiw_qtAjke2
+    id: GRID_ID
+    parents:
+    - ROOT_ID
+    type: GRID
+  HEADER_ID:
+    id: HEADER_ID
+    meta:
+      text: Atmosync Dashboard
+    type: HEADER
+  ROOT_ID:
+    children:
+    - GRID_ID
+    id: ROOT_ID
+    type: ROOT
+  ROW-E-eeHwDjWzjiw_qtAjke2:
+    children:
+    - CHART-explore-104-1
+    id: ROW-E-eeHwDjWzjiw_qtAjke2
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: ROW
+metadata:
+  default_filters: '{}'
+  timed_refresh_immune_slices: []
+  expanded_slices: {}
+  refresh_frequency: 0
+  color_scheme: ''
+  label_colors: {}
+  shared_label_colors: []
+  map_label_colors:
+    SUM(TEMPERATURE): '#1FA8C9'
+  color_scheme_domain: []
+  cross_filters_enabled: true
+theme_uuid: null
+version: 1.0.0

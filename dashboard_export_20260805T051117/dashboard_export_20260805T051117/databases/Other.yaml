@@ -1,0 +1,15 @@
+database_name: Other
+sqlalchemy_uri: snowflake://sooryak:XXXXXXXXXX@ZSZEYQE-VW25895/ATMOSYNC_DB/RAW?role=ACCOUNTADMIN&warehouse=ATMOSYNC_WH
+cache_timeout: null
+expose_in_sqllab: true
+allow_run_async: false
+allow_ctas: false
+allow_cvas: false
+allow_dml: false
+allow_file_upload: false
+extra:
+  allows_virtual_table_explore: true
+impersonate_user: false
+configuration_method: sqlalchemy_form
+uuid: bd39fb27-a357-4cff-a75f-fa60cc0002c5
+version: 1.0.0
